@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>所有问题</h1>
+<a href="{% url 'qa:ask_question' %}">提问</a>
+
+{% for question in questions %}
+  <div class="question">
+    <h3><a href="{% url 'qa:question_detail' question.pk %}">{{ question.title }}</a></h3>
+    <p>{{ question.content|truncatechars:200 }}</p>
+    <small>提问者：{{ question.user.username }} | {{ question.created_at }}</small>
+  </div>
+{% endfor %}
+{% endblock %}

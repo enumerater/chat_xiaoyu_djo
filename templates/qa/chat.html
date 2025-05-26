@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>chat小玉问答助手</title>
+    
+    <style>
+        .chat-history {
+            max-height: 60vh;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: 20%;
+        }
+        .bot-message {
+            background-color: #f5f5f5;
+            margin-right: 20%;
+        }
+        .message img {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">智能问答助手</h2>
+        <!-- 对话历史记录 -->
+        <div class="chat-history mt-4">
+            {% for item in history %}
+                <div class="message user-message">
+                    <strong>你：</strong>
+                    <p>{{ item.text }}</p>
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="上传的图片">
+                    {% endif %}
+                </div>
+                <div class="message bot-message">
+                    <strong>AI：</strong>
+                    <p>{{ item.response }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- 对话输入表单 -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.text }}
+            </div>
+            <div class="mb-3">
+                {{ form.image }}
+            </div>
+            <button type="submit" class="btn btn-primary">发送</button>
+        </form>
+
+    </div>
+    {% endblock %}
+</body>
+</html>

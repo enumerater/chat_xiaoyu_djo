@@ -27,10 +27,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# 登出页面
+LOGOUT_REDIRECT_URL = '/core/'
 
+AUTH_USER_MODEL = 'auth.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +48,8 @@ INSTALLED_APPS = [
     'apps.detection.apps.DetectionConfig',
     'apps.qa.apps.QaConfig',
 
+    'widget_tweaks',
+
 ]
 
 MIDDLEWARE = [
@@ -54,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'xiaoyu.urls'
@@ -82,7 +89,7 @@ WSGI_APPLICATION = 'xiaoyu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 使用 MySQL 后端
-        'NAME': 'polls',          # 数据库名称（需提前创建）
+        'NAME': 'accounts',          # 数据库名称（需提前创建）
         'USER': 'root',         # MySQL 用户名（如 root）
         'PASSWORD': '1234',     # MySQL 密码
         'HOST': 'localhost',                   # 数据库主机（本地为 localhost）
@@ -130,6 +137,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+
+
 STATICFILES_DIRS = [
     os.path.join('./', 'static'),  # 指向你的 static 文件夹
 ]

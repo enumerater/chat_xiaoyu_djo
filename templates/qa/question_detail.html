@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ question.title }}</h1>
+<p>{{ question.content }}</p>
+<small>提问者：{{ question.user.username }} | {{ question.created_at }}</small>
+
+<h3>回答</h3>
+{% for answer in question.answers.all %}
+  <div class="answer">
+    <p>{{ answer.content }}</p>
+    <small>回答者：{{ answer.user.username }} | {{ answer.created_at }}</small>
+  </div>
+{% endfor %}
+
+{% if user.is_authenticated %}
+  <form method="post" action="{% url 'qa:create_answer' question.pk %}">
+    {% csrf_token %}
+    {{ answer_form.as_p }}
+    <button type="submit">提交回答</button>
+  </form>
+{% else %}
+  <p><a href="{% url 'accounts:login' %}">登录</a>后回答</p>
+{% endif %}
+{% endblock %}
